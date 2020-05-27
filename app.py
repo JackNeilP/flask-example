@@ -15,7 +15,7 @@ def goodbye_world():
 
 @app.route('/hello/<name>')
 def hello_name(name):
-	return f"Hello {name}"
+	return f"Hello {name}!"
 
 
 @app.route('/b')
