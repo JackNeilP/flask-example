@@ -1,8 +1,24 @@
 language: python
 python: 3.7
 
+branches:
+  only:
+    - master
+
 install:
   - pip install -r requirements.txt
 
 script:
   - python -m unittest discover tests
+  - docker build
+    -t jackneilp/flask-example:latest
+    -t jackneilp/flask-example:$TRAVIS_BUILD_NUMBER .
+
+before_deploy:
+  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+
+deploy:
+  provider: script
+  script: docker push "jackneilp/flask-example:latest" && docker push "jackneilp/flask-example:$TRAVIS_BUILD_NUMBER"
+  on:
+    branch: master
