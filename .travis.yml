@@ -6,4 +6,6 @@ install:
 
 script:
   - python -m unittest discover tests
-  - docker build .
+  - docker build
+    -t jackneilp/flask-example:latest
+    -t jackneilp/flask-example:$TRAVIS_BUILD_NUMBER .
